@@ -10,6 +10,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.example.demo.vaccinationCenter.VaccinationCenter;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -20,11 +25,11 @@ import java.util.List;
 @Table(name = "users")
 @Entity
 
-
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User implements UserDetails {
 @Id
 @GeneratedValue
-    private Integer id;
+    private Long id;
 
     private String firstName;
 
@@ -34,15 +39,50 @@ public class User implements UserDetails {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private Role role;
+     private Role role;
     
+
+
     //CAN CONVERT IT INTO ENUM 
     private String status;
 
+
+//***************** */
+    // @JsonIgnore
+    // @OneToOne(mappedBy = "vaccinationCenterOwner", cascade = CascadeType.ALL)
+    // private VaccinationCenter vaccinationCenter;
+
+//   @OneToOne(cascade = CascadeType.ALL)
+//   private VaccinationCenter vaccinationCenter;
+// @OneToOne(cascade = CascadeType.ALL)
+// @JoinColumn(name = "vaccination_center_owner_id", referencedColumnName = "id")
+// private User vaccinationCenterOwner;
+
+
+
+
+@OneToOne(mappedBy = "vaccinationCenterOwner")
+@JsonIgnore
+private VaccinationCenter vaccinationCenterOwner;
+
+// @OneToOne(mappedBy = "vaccinationCenterOwner" ,  cascade = CascadeType.ALL)
+// private VaccinationCenter vaccinationCenter;
+
+
+
+
+ 
+//***************** */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
+ 
+
+
+    // public User () {
+
+    // }
 
     @Override
     public String getPassword() {
@@ -72,5 +112,16 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+
+
+    public VaccinationCenter getVaccinationCenter(){
+        return vaccinationCenterOwner;
+    }
+
+
+    public void setVaccinationCenter(VaccinationCenter vaccinationCenterOwner){
+        this.vaccinationCenterOwner = vaccinationCenterOwner;
     }
 }

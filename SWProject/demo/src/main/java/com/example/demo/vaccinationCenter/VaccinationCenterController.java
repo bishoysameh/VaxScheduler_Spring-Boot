@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 // import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+// import org.springframework.web.client.HttpClientErrorException.NotFound;
 
 import com.example.demo.vaccine.Vaccine;
 
@@ -48,6 +49,15 @@ public class VaccinationCenterController {
 
 
 
+
+@GetMapping(path = "/Owner/{OwnerId}")
+ public VaccinationCenter getVaccinationCenterByOwnerId(@PathVariable Long OwnerId ){
+    return vaccinationCenterService.getVaccinationCenterByOwnerId(OwnerId);
+    
+ } 
+
+
+ 
 
 
     @PostMapping

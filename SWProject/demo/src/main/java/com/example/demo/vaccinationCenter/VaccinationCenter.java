@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.example.demo.user.User;
 import com.example.demo.vaccine.Vaccine;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.*;
 
@@ -15,6 +17,9 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "vaccination_centers")
+
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
 public class VaccinationCenter {
 
 
@@ -35,8 +40,12 @@ public class VaccinationCenter {
     // private String email;
     // private LocalDate dob;
     private String address;
-    private String contact_info;
 
+    @OneToOne
+    @JoinColumn(name = "vaccinationCenterOwner_id", referencedColumnName = "id")
+    private User vaccinationCenterOwner;
+    
+    private String contact_info;
 
 
     // Define the one-to-many relationship with vaccines
@@ -44,9 +53,15 @@ public class VaccinationCenter {
     @OneToMany(mappedBy = "vaccinationCenter", cascade = CascadeType.ALL)
     private List<Vaccine> vaccines;
 
+/**************************** */
+    // @OneToOne(cascade = CascadeType.ALL)
+    // @JoinColumn(name = "vaccination_center_owner_id", referencedColumnName = "id")
+    // private User vaccinationCenterOwner;
 
-
-
+    // @OneToOne(cascade = CascadeType.ALL)
+    // @JoinColumn(name = "vaccinationCenterOwner_id", referencedColumnName = "id")
+    // private User vaccinationCenterOwner;
+/**************************** */
 
     //  @JsonIgnore
     //  @OneToMany(mappedBy = "vaccine")
@@ -64,9 +79,9 @@ public class VaccinationCenter {
 
 
 //************************** */
-    @ManyToOne
-    @JoinColumn(name = "adminId", referencedColumnName = "id")
-    private User admin;
+    // @ManyToOne
+    // @JoinColumn(name = "adminId", referencedColumnName = "id")
+    // private User admin;
 
 
 
@@ -122,6 +137,20 @@ public class VaccinationCenter {
     public List<Vaccine> getVaccines() {
         return vaccines;
     }
+
+
+
+
+
+
+    public User getUsers(){
+        return vaccinationCenterOwner;
+     }
+    
+     public void setUsers(User vaccinationCenterOwner){
+        this.vaccinationCenterOwner = vaccinationCenterOwner;
+     }
+    
     //**************************
 
     // public void setDob(LocalDate dob) {
@@ -145,4 +174,6 @@ public class VaccinationCenter {
                 ", dob=" + contact_info +
                 '}';
     }
+
+  
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.demo.vaccine.Vaccine;
+// import com.example.demo.user.User;
 
 import jakarta.transaction.Transactional;
 
@@ -58,15 +59,18 @@ public class VaccinationCenterService {
     }
 
 
+  
+    public VaccinationCenter getVaccinationCenterByOwnerId(Long ownerId) {
+        return vaccinationCenterRepository.findByVaccinationCenterOwnerId(ownerId);
+    }
+
+
 
 
 
 
     public void addVaccinationcenter(VaccinationCenter vaccinationCenter) {
-        // Optional <VaccinationCenter> StudentOptional = vaccinationCenterRepository.findStudentByEmail(student.getEmail());
-        // if (StudentOptional.isPresent()){
-        //     throw new IllegalStateException("Email taken");
-        // }
+      
         vaccinationCenterRepository.save(vaccinationCenter);
 
         System.out.println(vaccinationCenter); 
