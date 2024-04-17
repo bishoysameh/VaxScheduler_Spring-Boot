@@ -1,5 +1,7 @@
 package com.example.demo.reservation;
 
+import java.util.Calendar;
+import java.util.Date;
 // import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -49,6 +51,32 @@ public class ReservationService {
             {
                 throw new ReservationException("you cant reserve second dose until first dose approved");
             }
+
+            if (request.getDoseNumber().equals(DoseNumber.SECOND_DOSE) && existingReservations.get(0).getStatus().equals(ReservationStatus.APPROVED) && existingReservations.size() == 1) 
+                {
+                    Reservation firstDoseReservation = existingReservations.get(0);
+
+                    int GapTimeForVaccine = firstDoseReservation.getVaccine().getTimeGapFirstSecondDose();
+                    Date firstDoseDate = firstDoseReservation.getReservationDate(); 
+                    //date which the user request to reserve second dose
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(firstDoseDate);
+                    calendar.add(Calendar.DAY_OF_MONTH, GapTimeForVaccine);
+
+                    //date after add days between 2 doses
+                    Date updatedDate = calendar.getTime();
+
+
+                    Date requsestSecondDoseDate = request.getReservationDate();
+                    if (updatedDate.compareTo(requsestSecondDoseDate) > 0) 
+                    {
+                        throw new ReservationException("you cant reserve second dose before gap time between 2 doses");
+                    }
+
+
+                }   
+
+
             if(existingReservations.size() == 2 )
             {
                 throw new ReservationException("You are already reserved both doses of this vaccine in this center");

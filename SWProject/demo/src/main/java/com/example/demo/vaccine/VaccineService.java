@@ -95,7 +95,7 @@ public class VaccineService {
         if (request.getPrecautions() != null) {
             vaccine.setPrecautions(request.getPrecautions());
         }
-        if (request.getTimeGapFirstSecondDose() != null) {
+        if (request.getTimeGapFirstSecondDose() >= 0 ) {
             vaccine.setTimeGapFirstSecondDose(request.getTimeGapFirstSecondDose());
         }
 

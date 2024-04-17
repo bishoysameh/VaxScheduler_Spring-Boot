@@ -56,7 +56,7 @@ public class Vaccine {
 
 
 
-    private String timeGapFirstSecondDose;
+    private int timeGapFirstSecondDose;
     
 
       public Long getId() {
@@ -95,11 +95,11 @@ public class Vaccine {
     }
     
     // Getters and setters for timeGapFirstSecondDose
-    public String getTimeGapFirstSecondDose() {
+    public int getTimeGapFirstSecondDose() {
         return timeGapFirstSecondDose;
     }
 
-    public void setTimeGapFirstSecondDose(String timeGapFirstSecondDose) {
+    public void setTimeGapFirstSecondDose(int timeGapFirstSecondDose) {
         this.timeGapFirstSecondDose = timeGapFirstSecondDose;
     }
 /********************************* */
