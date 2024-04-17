@@ -2,6 +2,7 @@ package com.example.demo.vaccinationCenter;
 
 import java.util.List;
 
+import com.example.demo.reservation.Reservation;
 import com.example.demo.user.User;
 import com.example.demo.vaccine.Vaccine;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -53,35 +54,11 @@ public class VaccinationCenter {
     @OneToMany(mappedBy = "vaccinationCenter", cascade = CascadeType.ALL)
     private List<Vaccine> vaccines;
 
-/**************************** */
-    // @OneToOne(cascade = CascadeType.ALL)
-    // @JoinColumn(name = "vaccination_center_owner_id", referencedColumnName = "id")
-    // private User vaccinationCenterOwner;
-
-    // @OneToOne(cascade = CascadeType.ALL)
-    // @JoinColumn(name = "vaccinationCenterOwner_id", referencedColumnName = "id")
-    // private User vaccinationCenterOwner;
-/**************************** */
-
-    //  @JsonIgnore
-    //  @OneToMany(mappedBy = "vaccine")
-    //  private List<Vaccine> vaccines;
-
-    
-
-    // @OneToMany(mappedBy = "vaccinationCenter")
-    // private List<Vaccine> vaccines;
-
-//************************** */
-    // @OneToMany(mappedBy = "vaccinationCenter")
-    // // @JoinColumn(name="fk_VaccinationCenter_id" , referencedColumnName = "id")
-    // private List<Vaccine> vaccines;
 
 
-//************************** */
-    // @ManyToOne
-    // @JoinColumn(name = "adminId", referencedColumnName = "id")
-    // private User admin;
+    @JsonIgnore
+    @OneToMany(mappedBy = "vaccinationCenter")
+    private List<Reservation> reservations;
 
 
 
@@ -153,17 +130,13 @@ public class VaccinationCenter {
     
     //**************************
 
-    // public void setDob(LocalDate dob) {
-    //     this.dob = dob;
-    // }
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
 
-    // public Integer getAge() {
-    //     return age;
-    // }
-
-    // public void setAge(Integer age) {
-    //     this.age = age;
-    // }
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
 
     @Override
     public String toString() {

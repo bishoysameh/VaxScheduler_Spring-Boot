@@ -1,8 +1,13 @@
 package com.example.demo.vaccine;
 
+import java.util.List;
+
+import com.example.demo.reservation.Reservation;
+
 // import java.sql.Date;
 
 import com.example.demo.vaccinationCenter.VaccinationCenter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
@@ -41,6 +47,12 @@ public class Vaccine {
     @ManyToOne
     @JoinColumn(name = "vaccination_center_id", referencedColumnName = "id")
     private VaccinationCenter vaccinationCenter;
+
+
+
+    @OneToMany(mappedBy = "vaccine")
+    @JsonIgnore
+    private List<Reservation> reservations;
 
 
 
@@ -90,7 +102,15 @@ public class Vaccine {
     public void setTimeGapFirstSecondDose(String timeGapFirstSecondDose) {
         this.timeGapFirstSecondDose = timeGapFirstSecondDose;
     }
+/********************************* */
 
+public List<Reservation> getReservations() {
+    return reservations;
+}
+
+public void setReservations(List<Reservation> reservations) {
+    this.reservations = reservations;
+}
 
     @Override
     public String toString() {

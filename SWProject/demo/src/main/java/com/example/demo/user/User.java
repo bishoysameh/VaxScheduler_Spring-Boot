@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.example.demo.reservation.Reservation;
 import com.example.demo.vaccinationCenter.VaccinationCenter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -65,9 +66,12 @@ public class User implements UserDetails {
 @JsonIgnore
 private VaccinationCenter vaccinationCenterOwner;
 
-// @OneToOne(mappedBy = "vaccinationCenterOwner" ,  cascade = CascadeType.ALL)
-// private VaccinationCenter vaccinationCenter;
 
+
+// @OneToMany(mappedBy = "patient" , cascade = CascadeType.ALL)
+@OneToMany(mappedBy = "patient")
+@JsonIgnore
+private List<Reservation> reservations;
 
 
 
@@ -123,5 +127,14 @@ private VaccinationCenter vaccinationCenterOwner;
 
     public void setVaccinationCenter(VaccinationCenter vaccinationCenterOwner){
         this.vaccinationCenterOwner = vaccinationCenterOwner;
+    }
+
+/**************************** */
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
     }
 }
