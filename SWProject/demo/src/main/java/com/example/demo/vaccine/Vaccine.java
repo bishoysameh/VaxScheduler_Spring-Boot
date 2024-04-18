@@ -2,6 +2,7 @@ package com.example.demo.vaccine;
 
 import java.util.List;
 
+import com.example.demo.certificate.Certificate;
 import com.example.demo.reservation.Reservation;
 
 // import java.sql.Date;
@@ -54,6 +55,11 @@ public class Vaccine {
     @JsonIgnore
     private List<Reservation> reservations;
 
+
+
+    @OneToMany(mappedBy = "vaccine")
+    @JsonIgnore
+    private List<Certificate> certificates;
 
 
     private int timeGapFirstSecondDose;
@@ -111,6 +117,16 @@ public List<Reservation> getReservations() {
 public void setReservations(List<Reservation> reservations) {
     this.reservations = reservations;
 }
+/******************************************** */
+
+public List<Certificate> getCertificates() {
+    return certificates;
+}
+
+public void setCertificates(List<Certificate> certificates) {
+    this.certificates = certificates;
+}
+/********************************** */
 
     @Override
     public String toString() {

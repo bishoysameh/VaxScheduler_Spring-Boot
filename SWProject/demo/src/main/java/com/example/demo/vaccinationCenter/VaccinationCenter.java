@@ -2,6 +2,7 @@ package com.example.demo.vaccinationCenter;
 
 import java.util.List;
 
+import com.example.demo.certificate.Certificate;
 import com.example.demo.reservation.Reservation;
 import com.example.demo.user.User;
 import com.example.demo.vaccine.Vaccine;
@@ -59,6 +60,12 @@ public class VaccinationCenter {
     @JsonIgnore
     @OneToMany(mappedBy = "vaccinationCenter")
     private List<Reservation> reservations;
+
+/*************************************** */
+    @JsonIgnore
+    @OneToMany(mappedBy = "vaccinationCenter")
+    private List<Certificate> certificates;
+
 
 
 
@@ -137,6 +144,20 @@ public class VaccinationCenter {
     public void setReservations(List<Reservation> reservations) {
         this.reservations = reservations;
     }
+
+
+
+    /***************************************** */
+    public List<Certificate> getCertificates() {
+        return certificates;
+    }
+
+    public void setCertificates(List<Certificate> certificates) {
+        this.certificates = certificates;
+    }
+
+
+
 
     @Override
     public String toString() {

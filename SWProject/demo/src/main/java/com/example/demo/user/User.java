@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.example.demo.certificate.Certificate;
 import com.example.demo.reservation.Reservation;
 import com.example.demo.vaccinationCenter.VaccinationCenter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -48,30 +49,25 @@ public class User implements UserDetails {
     private String status;
 
 
-//***************** */
-    // @JsonIgnore
-    // @OneToOne(mappedBy = "vaccinationCenterOwner", cascade = CascadeType.ALL)
-    // private VaccinationCenter vaccinationCenter;
-
-//   @OneToOne(cascade = CascadeType.ALL)
-//   private VaccinationCenter vaccinationCenter;
-// @OneToOne(cascade = CascadeType.ALL)
-// @JoinColumn(name = "vaccination_center_owner_id", referencedColumnName = "id")
-// private User vaccinationCenterOwner;
-
-
-
 
 @OneToOne(mappedBy = "vaccinationCenterOwner")
 @JsonIgnore
 private VaccinationCenter vaccinationCenterOwner;
 
 
-
+/*********************************** */
 // @OneToMany(mappedBy = "patient" , cascade = CascadeType.ALL)
 @OneToMany(mappedBy = "patient")
 @JsonIgnore
 private List<Reservation> reservations;
+
+
+
+/************************************** */
+@OneToMany(mappedBy = "patient")
+@JsonIgnore
+private List<Certificate> certificates;
+
 
 
 
@@ -136,5 +132,15 @@ private List<Reservation> reservations;
 
     public void setReservations(List<Reservation> reservations) {
         this.reservations = reservations;
+    }
+
+
+/************************************************************* */
+    public List<Certificate> getCertificates() {
+        return certificates;
+    }
+
+    public void setCertificates(List<Certificate> certificates) {
+        this.certificates = certificates;
     }
 }
